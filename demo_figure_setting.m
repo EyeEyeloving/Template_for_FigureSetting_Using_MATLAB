@@ -70,7 +70,17 @@ set(f3_ax, 'box', 'on', 'LineWidth', 1,...
 
 
 %%%%%%%%%%%%%%%%%%%%%% 子图4
-f4_ax = subplot(4,1,4); plot(x, y, 'LineWidth', 1, 'Color', 'black');
+f4_ax = subplot(4,1,4); hold(f4_ax, "on");
+patch(f4_ax, 'XData', [x(1), x(25), x(25), x(1)], 'YData', [-1, -1, 1, 1], ...
+    'FaceColor', CMap{1}, 'FaceAlpha', 0.6, 'EdgeColor', 'none')
+patch(f4_ax, 'XData', [x(25), x(50), x(50), x(25)], 'YData', [-1, -1, 1, 1], ...
+    'FaceColor', CMap{2}, 'FaceAlpha', 0.6, 'EdgeColor', 'none')
+patch(f4_ax, 'XData', [x(50), x(75), x(75), x(50)], 'YData', [-1, -1, 1, 1], ...
+    'FaceColor', CMap{1}, 'FaceAlpha', 0.6, 'EdgeColor', 'none')
+patch(f4_ax, 'XData', [x(75), x(100), x(100), x(75)], 'YData', [-1, -1, 1, 1], ...
+    'FaceColor', CMap{2}, 'FaceAlpha', 0.6, 'EdgeColor', 'none')
+plot(f4_ax, x, y, 'LineWidth', 1, 'Color', 'black');
+plot(f4_ax, x, cos(x), 'LineWidth', 1, 'Color', 'red');
 %%%%%%%%%%%%%%%%%%%%%% 设置子图属性4
 xlabel(f4_ax, 'Time (s)', 'FontName', 'Cambria', 'FontSize', 10);
 ylabel(f4_ax, 'Magnitude', 'FontName', 'Cambria', 'FontSize', 10);
@@ -78,3 +88,8 @@ xlim(f4_ax, [0, 2*pi]);
 set(f4_ax, 'box', 'on', 'LineWidth', 1,...
     'FontName', 'Cambria', 'FontSize', 10, ...
     'Position', [x_dist, y_bot, axes_width, axes_height]);
+% 自定义图例
+boxchi = get(f4_ax, 'Children');
+% boxchi内顺序是画图顺序的倒序，即最后画的对象在boxchi的索引最前
+lgd1 = legend([boxchi(2), boxchi(1)], ["black", "red"], ...
+    'Location', 'southwest');
